@@ -2,58 +2,21 @@ import { Link } from "react-router-dom";
 import { StyledHeader } from "./style";
 import { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-// import { UserContext } from "../../providers/userContext/userContext";
 
 export function Header() {
-  const [nav, setNav] = useState(false);
-  // const { logout, setUpdateUserModal, setDeleteUserModal } =
-  //   useContext(UserContext);
-
-  // function handleUpdateUser() {
-  //   setUpdateUserModal(true);
-  //   setNav(false);
-  // }
-
-  // function handleDeleteUser() {
-  //   setDeleteUserModal(true);
-  //   setNav(false);
-  // }
-
   return (
-    <StyledHeader nav={nav}>
-      <div className="navUp">
-        <div>
-          <h1>Duelo na Dimensão</h1>
-        </div>
+    <StyledHeader>
+      <h1>Duelo na Dimensão</h1>
 
-        <ul className="navUp__ul">
-          <li>
-            <button >Duelistas</button>
-          </li>
+      <ul>
+        <Link to="/dash">Duelo</Link>
 
-          <li>
-            <button > Duelos </button>
-          </li>
-         
-        </ul>
+        <Link to="/duelists">Duelistas</Link>
 
-        <GiHamburgerMenu className="menuIcon" onClick={() => setNav(!nav)} />
-      </div>
+        <Link to="/duels">Duelos</Link>
 
-      {/* <div className="navDown">
-        <ul>
-          <li>
-            <button onClick={() => handleDeleteUser()}>Deletar Conta</button>
-          </li>
-
-          <li>
-            <button onClick={() => handleUpdateUser()}> Editar Perfil </button>
-          </li>
-          <li>
-            <button onClick={() => logout()}> Sair </button>
-          </li>
-        </ul>
-      </div> */}
+        <Link to="/rules">Regras</Link>
+      </ul>
     </StyledHeader>
   );
 }

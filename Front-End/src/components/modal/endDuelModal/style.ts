@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 
-export const StyledUpdateUserForm = styled.form`
+export const StyledEndDuelForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
   padding: 1rem;
   width: 100%;
@@ -11,7 +12,40 @@ export const StyledUpdateUserForm = styled.form`
   border-bottom-right-radius: 5px;
   background-color: var(--grey-3);
 
-  & > div {
+  .duelists {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-around;
+  }
+
+  .duelistA {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .duelistB {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .duelistA > div {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .duelistB > div {
     display: flex;
     flex-direction: column;
     align-self: flex-start;
@@ -37,19 +71,38 @@ export const StyledUpdateUserForm = styled.form`
     color: var(--grey-0);
   }
 
-  .updateButton {
+  .WinnerButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-around;
+  }
+
+  .WinnerButton button {
+    background-color: var(--grey-2);
+    padding: 1rem 0;
+    color: var(--grey-0);
+    font-weight: 700;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .endDuelButton {
     background-color: var(--color-primary-negative);
     padding: 1rem 0;
     color: var(--grey-0);
     font-weight: 700;
     border-radius: 5px;
+    width: 100%;
   }
 
-  .updateButton:hover {
+  .endDuelButton:hover {
     background-color: var(--color-primary);
   }
 
-  .showsenha {
+  /* .showsenha {
     background-color: var(--color-primary-negative);
     padding: 1rem 0;
     color: var(--grey-0);
@@ -60,5 +113,5 @@ export const StyledUpdateUserForm = styled.form`
 
   .showsenha:hover {
     background-color: var(--color-primary);
-  }
+  } */
 `;

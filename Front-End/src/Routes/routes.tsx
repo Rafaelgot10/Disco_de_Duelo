@@ -5,18 +5,22 @@ import { Route, Routes } from "react-router-dom";
 import { DashPage } from "../pages/dash/dash";
 // import { ContactProvider } from "../providers/contactContext/contactContext";
 import { NotFound } from "../pages/notFound/notFound";
+import { DuelistProvider } from "../providers/duelistContext/duelistContext";
+import { DuelProvider } from "../providers/duelsContext/duelsContext";
+import { RulesPage } from "../pages/rules/rules";
 
 export const RouterComponent = () => {
   return (
-    // <UserProvider>
-      // <ContactProvider>
+    <DuelProvider>
+      <DuelistProvider>
         <Routes>
           {/* <Route path="/login" element={<LoginPage />} /> */}
           {/* <Route path="/register" element={<RegisterPage />} /> */}
           <Route path="/dash" element={<DashPage />} />
           <Route path="/*" element={<NotFound />} />
+          <Route path="/rules" element={<RulesPage />} />
         </Routes>
-      // </ContactProvider>
-    // </UserProvider>
+      </DuelistProvider>
+    </DuelProvider>
   );
 };

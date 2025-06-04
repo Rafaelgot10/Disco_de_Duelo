@@ -11,13 +11,103 @@
 // import axios from "axios";
 // import { UserContext } from "../userContext/userContext";
 
+import { createContext, useEffect, useState } from "react";
+import { IDefaultProviderProps, IDuelContext, TDuel } from "./@Types";
+
 // type responseError = {
 //   message: string;
 // };
 
-// export const ContactContext = createContext({} as IContactContext);
+export const DuelContext = createContext({} as IDuelContext);
 
-// export const ContactProvider = ({ children }: IDefaultProviderProps) => {
+export const DuelProvider = ({ children }: IDefaultProviderProps) => {
+  const [endDuelModal, setEndDuelModal] = useState(false);
+  const [currentDeckDuelistA, setCurrentDeckDuelistA] = useState<string | null>(
+    null
+  );
+  const [currentDeckDuelistB, setCurrentDeckDuelistB] = useState<string | null>(
+    null
+  );
+
+  const [isDueling, setIsDueling] = useState(false);
+
+  const [duelHistory, setDuelHistory] = useState<TDuel[] | null>(null);
+
+  const [seconds, setSeconds] = useState(0);
+
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const storedDuels = localStorage.getItem("duelHistory");
+    if (storedDuels) {
+      setDuelHistory(JSON.parse(storedDuels));
+    }
+  }, []);
+
+  function saveDuelResult(duel: TDuel) {
+    const existingDuels = JSON.parse(
+      localStorage.getItem("duelHistory") || "[]"
+    );
+    const updatedDuels = [...existingDuels, duel];
+
+    localStorage.setItem("duelHistory", JSON.stringify(updatedDuels));
+    setDuelHistory(updatedDuels);
+  }
+
+  function formatTime(totalSeconds: number): string {
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+      2,
+      "0"
+    );
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isDueling && !isPaused) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev + 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isDueling, isPaused]);
+
+  function togglePause() {
+    setIsPaused((prev) => !prev);
+  }
+
+  return (
+    <DuelContext.Provider
+      value={{
+        endDuelModal,
+        setEndDuelModal,
+        currentDeckDuelistA,
+        setCurrentDeckDuelistA,
+        currentDeckDuelistB,
+        setCurrentDeckDuelistB,
+        isDueling,
+        setIsDueling,
+        isPaused,
+        setIsPaused,
+        seconds,
+        setSeconds,
+        formatTime,
+        togglePause,
+        duelHistory,
+        setDuelHistory,
+        saveDuelResult,
+      }}
+    >
+      {children}
+    </DuelContext.Provider>
+  );
+};
+
 //   const [contact, setContact] = useState<TContact>();
 
 //   const [createContactModal, setCreateContactModal] = useState(false);
@@ -97,23 +187,5 @@
 //     }
 //   }
 
-//   return (
-//     <ContactContext.Provider
-//       value={{
-//         contact,
-//         setContact,
-//         createContact,
-//         createContactModal,
-//         setCreateContactModal,
-//         updateContactModal,
-//         setUpdateContactModal,
-//         deleteContactModal,
-//         setDeleteContactModal,
-//         updateContact,
-//         deleteContact,
-//       }}
-//     >
-//       {children}
-//     </ContactContext.Provider>
-//   );
+//
 // };
